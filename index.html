@@ -10,16 +10,12 @@
 #podcast-terminal-blacktop {
     --bt-neon: #FFFF00;
     --bt-white: #ffffff;
-    --bt-border: rgba(255, 255, 255, 0.12);
-    display: flow-root;
-    clear: both;
+    --bt-border: rgba(255,255,255,0.12);
     background: transparent !important;
     color: var(--bt-white);
     padding-left: 30px;
     padding-right: 30px;
-    margin: 0;
-    font-family: 'JetBrains Mono', monospace !important;
-    width: 100%;
+    font-family: 'JetBrains Mono', monospace;
 }
 
 @media (max-width:768px){
@@ -49,8 +45,8 @@
     flex:1 1 calc(50% - 10px);
     background:#000;
     border:1px solid rgba(255,255,255,0.1);
-    text-decoration:none;
     color:white;
+    text-decoration:none;
 }
 
 .pc-thumb {
@@ -60,11 +56,11 @@
     background-position:center;
 }
 
-.pc-content{
+.pc-content {
     padding:15px;
 }
 
-.pc-title{
+.pc-title {
     font-weight:800;
     font-size:14px;
 }
@@ -84,71 +80,52 @@
 </div>
 
 <script>
-const PLAYLIST_ID = "PLOu--yZWWSogumQEMxLeEEtjIOT-7QAcW";
-const API_KEY = "AIzaSyDUMMY"; // ← NON serve davvero per fallback
+const PLAYLIST_ID = 'PLOu--yZWWSogumQEMxLeEEtjIOT-7QAcW';
+const container = document.getElementById('dynamic-video-container');
+const loader = document.getElementById('loader');
 
-const container = document.getElementById("dynamic-video-container");
-const loader = document.getElementById("loader");
+const rssUrl = `https://www.youtube.com/feeds/videos.xml?playlist_id=${PLAYLIST_ID}`;
+const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}`;
 
-async function loadVideos() {
+async function fetchVideos() {
     try {
-        // Metodo stabile: scraping JSON embedded YouTube (no proxy)
-        const res = await fetch(`https://www.youtube.com/playlist?list=${PLAYLIST_ID}`);
-        const text = await res.text();
+        const response = await fetch(proxyUrl);
+        const data = await response.json();
 
-        const jsonMatch = text.match(/ytInitialData = (.*?);<\/script>/);
-        if(!jsonMatch) throw new Error("No data");
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(data.contents, "text/xml");
+        const entries = xmlDoc.getElementsByTagName("entry");
 
-        const data = JSON.parse(jsonMatch[1]);
+        container.innerHTML = '';
 
-        const videos = [];
-        const items = data.contents.twoColumnBrowseResultsRenderer.tabs[0]
-            .tabRenderer.content.sectionListRenderer.contents[0]
-            .itemSectionRenderer.contents[0]
-            .playlistVideoListRenderer.contents;
+        for (let i = 0; i < entries.length; i++) {
+            const entry = entries[i];
+            const title = entry.getElementsByTagName("title")[0].textContent;
+            const videoId = entry.getElementsByTagName("yt:videoId")[0].textContent;
 
-        items.forEach(item=>{
-            if(item.playlistVideoRenderer){
-                const v = item.playlistVideoRenderer;
-                videos.push({
-                    id: v.videoId,
-                    title: v.title.runs[0].text
-                });
-            }
-        });
+            const el = document.createElement("a");
+            el.className = "pc-card";
+            el.href = `https://www.youtube.com/watch?v=${videoId}`;
+            el.target = "_blank";
 
-        renderVideos(videos);
+            el.innerHTML = `
+                <div class="pc-thumb" style="background-image:url('https://i.ytimg.com/vi/${videoId}/mqdefault.jpg')"></div>
+                <div class="pc-content">
+                    <div class="pc-title">${title}</div>
+                </div>
+            `;
 
-    } catch(e) {
-        // FALLBACK: embed playlist diretto (non si rompe mai)
-        container.innerHTML = `
-        <iframe width="100%" height="500"
-        src="https://www.youtube.com/embed/videoseries?list=${PLAYLIST_ID}"
-        frameborder="0" allowfullscreen></iframe>`;
+            container.appendChild(el);
+        }
+
+    } catch (error) {
+        container.innerHTML = "<p style='opacity:0.5'>Errore caricamento video</p>";
     }
 
     loader.style.display = "none";
 }
 
-function renderVideos(videos){
-    container.innerHTML = "";
-    videos.forEach(v=>{
-        const el = document.createElement("a");
-        el.className="pc-card";
-        el.href=`https://www.youtube.com/watch?v=${v.id}`;
-        el.target="_blank";
-
-        el.innerHTML=`
-        <div class="pc-thumb" style="background-image:url('https://i.ytimg.com/vi/${v.id}/mqdefault.jpg')"></div>
-        <div class="pc-content">
-            <div class="pc-title">${v.title}</div>
-        </div>`;
-
-        container.appendChild(el);
-    });
-}
-
-loadVideos();
+fetchVideos();
 </script>
 
 </body>
