@@ -1,11 +1,7 @@
-<style>
-html, body {
-    max-width: 100%;
-    overflow-x: hidden;
-}
+
 </style>
 <!-- WRAPPER + LOADER -->
-<div id="outer-wrap" style="width:100%; display:flex; justify-content:center;">
+<div id="outer-wrap">
 
 <div id="loader" style="
 display:flex;
@@ -25,6 +21,15 @@ width:100%;
 </div>
 
 <style>
+    html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* 🔥 BLOCCO OVERFLOW UNIVERSALE */
+* {
+    max-width: 100%;
+}
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
@@ -35,6 +40,7 @@ width:100%;
     width: 100%;
     display: flex;
     justify-content: center;
+    overflow: hidden;
 }
 
 #podcast-terminal-blacktop {
@@ -349,6 +355,10 @@ document.getElementById('loader').style.display='none';
 }
 });
 observer.observe(document.getElementById('dynamic-video-container'),{childList:true});
+
+    * {
+    max-width: 100%;
+}
 </script>
 
 </div>
