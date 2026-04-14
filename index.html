@@ -3,129 +3,318 @@
 <head>
 <meta charset="UTF-8">
 <title>Blacktop</title>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;800&display=swap');
-
-#podcast-terminal-blacktop {
-    --bt-neon: #FFFF00;
-    --bt-white: #ffffff;
-    --bt-border: rgba(255,255,255,0.12);
-    background: transparent !important;
-    color: var(--bt-white);
-    padding-left: 30px;
-    padding-right: 30px;
-    font-family: 'JetBrains Mono', monospace;
-}
-
-@media (max-width:768px){
-    #podcast-terminal-blacktop{
-        padding-left:15px;
-        padding-right:15px;
-    }
-}
-
-.spinner {
-    width:40px;
-    height:40px;
-    border:3px solid rgba(255,255,255,0.2);
-    border-top:3px solid #FFFF00;
-    border-radius:50%;
-    animation:spin 1s linear infinite;
-}
-@keyframes spin{to{transform:rotate(360deg);}}
-
-.podcast-archive-grid {
-    display:flex;
-    flex-wrap:wrap;
-    gap:20px;
-}
-
-.pc-card {
-    flex:1 1 calc(50% - 10px);
-    background:#000;
-    border:1px solid rgba(255,255,255,0.1);
-    color:white;
-    text-decoration:none;
-}
-
-.pc-thumb {
-    width:100%;
-    aspect-ratio:16/9;
-    background-size:cover;
-    background-position:center;
-}
-
-.pc-content {
-    padding:15px;
-}
-
-.pc-title {
-    font-weight:800;
-    font-size:14px;
-}
-</style>
 </head>
 
 <body style="margin:0; background:transparent;">
 
 <div id="podcast-terminal-blacktop">
 
+<!-- LOADER -->
 <div id="loader" style="display:flex; justify-content:center; align-items:center; height:300px;">
     <div class="spinner"></div>
 </div>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;800&display=swap');
+
+@font-face {
+    font-family: 'Monument Extended';
+    src: url('https://fonts.cdnfonts.com/s/19595/MonumentExtended-Ultrabold.woff');
+    font-weight: 800;
+}
+
+#podcast-terminal-blacktop {
+    --bt-neon: #FFFF00;
+    --bt-white: #ffffff;
+    --bt-border: rgba(255, 255, 255, 0.12);
+    display: flow-root;
+    clear: both;
+    background: transparent !important;
+    color: var(--bt-white);
+    padding-left: 30px;
+    padding-right: 30px;
+    margin: 0;
+    font-family: 'JetBrains Mono', monospace !important;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* LOADER STYLE */
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255,255,255,0.2);
+    border-top: 3px solid #FFFF00;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+#podcast-terminal-blacktop * { box-sizing: border-box; }
+
+.bt-magazine-header, .podcast-archive-grid {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding-left: 0; 
+    padding-right: 0;
+}
+
+.bt-magazine-header { 
+    padding-top: 100px;
+    padding-bottom: 40px;
+    display: flex; 
+    flex-direction: column;
+}
+
+.bt-brand-stack { 
+    width: 100%; 
+    margin-bottom: 40px; 
+    overflow: hidden;
+}
+
+.bt-title-main, .bt-title-outline { 
+    font-family: 'Monument Extended', sans-serif !important;
+    font-size: clamp(4rem, 12vw, 11rem); 
+    font-weight: 900; 
+    line-height: 0.85; 
+    margin: 0; 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+    display: block;
+    white-space: nowrap;
+    max-width: 100%;
+}
+
+.bt-title-main { color: var(--bt-white); }
+
+.bt-title-outline { 
+    color: transparent; 
+    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.3); 
+    margin-top: 5px;
+}
+
+.bt-full-divider { 
+    width: 100%; 
+    height: 1px; 
+    background: rgba(255, 255, 255, 0.1); 
+    margin-bottom: 30px; 
+}
+
+.bt-editorial-text {
+    font-size: 11px; 
+    line-height: 1.8; 
+    color: rgba(255, 255, 255, 0.5); 
+    text-transform: uppercase; 
+    text-align: right !important;
+    max-width: 520px; 
+    margin-left: auto !important;
+    letter-spacing: 2px;
+    margin: 0;
+}
+
+.bt-editorial-text b { 
+    color: var(--bt-neon); 
+    font-weight: 800; 
+}
+
+.podcast-archive-grid { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 20px; 
+    padding-bottom: 100px;
+}
+
+.pc-card { 
+    position: relative; 
+    background: #000; 
+    border: 1px solid var(--bt-border); 
+    display: flex; 
+    flex-direction: column; 
+    transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+    text-decoration: none; 
+    color: inherit; 
+}
+
+.w-60 { flex: 1 1 calc(60% - 10px); }
+.w-40 { flex: 1 1 calc(40% - 10px); }
+.w-50 { flex: 1 1 calc(50% - 10px); }
+
+.pc-thumb-container { 
+    width: 100%; 
+    aspect-ratio: 16/9; 
+    overflow: hidden; 
+    border-bottom: 1px solid var(--bt-border); 
+}
+
+.pc-thumb { 
+    width: 100%; 
+    height: 100%; 
+    background-size: cover; 
+    background-position: center; 
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+}
+
+.pc-card:hover .pc-thumb { 
+    filter: grayscale(1) contrast(1.1) brightness(0.8); 
+    transform: scale(1.05); 
+}
+
+.pc-meta-strip {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 20px 0;
+    font-size: 9px;
+    color: rgba(255, 255, 255, 0.2); 
+    text-transform: uppercase;
+}
+
+.pc-content { 
+    padding: 15px 20px 20px; 
+    display: flex; 
+    flex-direction: column; 
+    flex-grow: 1; 
+}
+
+.pc-title { 
+    font-family: 'Monument Extended', sans-serif !important; 
+    font-size: 16px; 
+    font-weight: 800; 
+    margin-bottom: 12px; 
+    text-transform: uppercase; 
+}
+
+.pc-tag-list { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 6px; 
+}
+
+.tag-box { 
+    font-size: 8px; 
+    color: rgba(255, 255, 255, 0.4); 
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    padding: 2px 6px; 
+    font-weight: 800; 
+    text-transform: uppercase; 
+}
+
+.corner-arrow { 
+    position: absolute; 
+    bottom: 20px; 
+    right: 20px; 
+    width: 15px; 
+    opacity: 0.3; 
+    transition: 0.3s; 
+}
+
+.corner-arrow svg { 
+    width: 100%; 
+    stroke: var(--bt-neon); 
+    stroke-width: 3; 
+    fill: none; 
+    transform: rotate(90deg); 
+}
+
+.pc-card:hover { border-color: var(--bt-neon); }
+
+.pc-card:hover .corner-arrow { 
+    opacity: 1; 
+    transform: translate(3px, 3px); 
+}
+
+@media (max-width: 768px) {
+    #podcast-terminal-blacktop {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .bt-magazine-header { padding-top: 50px; }
+
+    .bt-title-main, 
+    .bt-title-outline {
+        font-size: 12.5vw !important;
+        line-height: 0.9 !important;
+    }
+
+    .w-60, .w-40, .w-50 { flex: 1 1 100%; }
+
+    .bt-editorial-text { letter-spacing: 1px !important; }
+}
+</style>
+
+<header class="bt-magazine-header">
+    <div class="bt-brand-stack">
+        <h1 class="bt-title-main">BLACKTOP</h1>
+        <h1 class="bt-title-outline">SESSIONS</h1>
+    </div>
+
+    <div class="bt-full-divider"></div>
+
+    <p class="bt-editorial-text">
+        THE UNDERGROUND <b>PHONK & WAVE</b> ARCHIVE...
+    </p>
+</header>
 
 <div id="dynamic-video-container" class="podcast-archive-grid"></div>
 
 </div>
 
 <script>
-const PLAYLIST_ID = 'PLOu--yZWWSogumQEMxLeEEtjIOT-7QAcW';
-const container = document.getElementById('dynamic-video-container');
-const loader = document.getElementById('loader');
+(function() {
+    const PLAYLIST_ID = 'PLOu--yZWWSogumQEMxLeEEtjIOT-7QAcW';
+    const container = document.getElementById('dynamic-video-container');
+    const loader = document.getElementById('loader');
 
-const rssUrl = `https://www.youtube.com/feeds/videos.xml?playlist_id=${PLAYLIST_ID}`;
-const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}`;
+    const rssUrl = `https://www.youtube.com/feeds/videos.xml?playlist_id=${PLAYLIST_ID}`;
+    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}`;
 
-async function fetchVideos() {
-    try {
-        const response = await fetch(proxyUrl);
-        const data = await response.json();
+    async function fetchVideos() {
+        try {
+            const response = await fetch(proxyUrl);
+            const data = await response.json();
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(data.contents, "text/xml");
+            const entries = xmlDoc.getElementsByTagName("entry");
 
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(data.contents, "text/xml");
-        const entries = xmlDoc.getElementsByTagName("entry");
+            container.innerHTML = '';
+            const fragment = document.createDocumentFragment();
 
-        container.innerHTML = '';
+            for (let i = 0; i < entries.length; i++) {
+                const entry = entries[i];
+                const title = entry.getElementsByTagName("title")[0].textContent;
+                const videoId = entry.getElementsByTagName("yt:videoId")[0].textContent;
 
-        for (let i = 0; i < entries.length; i++) {
-            const entry = entries[i];
-            const title = entry.getElementsByTagName("title")[0].textContent;
-            const videoId = entry.getElementsByTagName("yt:videoId")[0].textContent;
+                const sizeClass = (i % 3 === 0) ? 'w-60' : (i % 3 === 1) ? 'w-40' : 'w-50';
+                const thumb = `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`;
 
-            const el = document.createElement("a");
-            el.className = "pc-card";
-            el.href = `https://www.youtube.com/watch?v=${videoId}`;
-            el.target = "_blank";
+                const article = document.createElement('article');
+                article.className = `pc-card ${sizeClass}`;
+                article.innerHTML = `
+                    <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank">
+                        <div class="pc-thumb-container">
+                            <div class="pc-thumb" style="background-image:url('${thumb}')"></div>
+                        </div>
+                        <div class="pc-content">
+                            <h2 class="pc-title">${title}</h2>
+                        </div>
+                    </a>`;
+                fragment.appendChild(article);
+            }
 
-            el.innerHTML = `
-                <div class="pc-thumb" style="background-image:url('https://i.ytimg.com/vi/${videoId}/mqdefault.jpg')"></div>
-                <div class="pc-content">
-                    <div class="pc-title">${title}</div>
-                </div>
-            `;
+            container.appendChild(fragment);
 
-            container.appendChild(el);
+        } catch (error) {
+            console.warn("Sync failed.");
         }
 
-    } catch (error) {
-        container.innerHTML = "<p style='opacity:0.5'>Errore caricamento video</p>";
+        loader.style.display = "none";
     }
 
-    loader.style.display = "none";
-}
-
-fetchVideos();
+    fetchVideos();
+})();
 </script>
 
 </body>
