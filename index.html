@@ -3,105 +3,356 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blacktop Sessions - 100 Ottani Please!™</title>
+    <title>100 Ottani Please!™ - Blacktop Sessions</title>
+    <div id="podcast-terminal-blacktop">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;800&display=swap');
+        
         @font-face {
             font-family: 'Monument Extended';
             src: url('https://fonts.cdnfonts.com/s/19595/MonumentExtended-Ultrabold.woff');
             font-weight: 800;
         }
 
-        body { margin: 0; background-color: #000; color: #fff; font-family: 'JetBrains Mono', monospace; overflow-x: hidden; }
-        
-        #main-container { max-width: 1400px; margin: 0 auto; padding: 0 30px; }
-
-        /* HEADER */
-        .bt-header { padding: 100px 0 40px; display: flex; flex-direction: column; }
-        .bt-title { font-family: 'Monument Extended', sans-serif; font-size: clamp(3.5rem, 12vw, 11rem); line-height: 0.85; margin: 0; text-transform: uppercase; }
-        .bt-outline { color: transparent; -webkit-text-stroke: 1.5px rgba(255,255,255,0.3); }
-        .bt-divider { height: 1px; background: rgba(255,255,255,0.1); margin: 30px 0; }
-        .bt-info { font-size: 11px; color: rgba(255,255,255,0.5); text-align: right; text-transform: uppercase; }
-        .bt-info b { color: #FFFF00; }
-
-        /* GRID MAGAZINE */
-        .bt-grid { display: flex; flex-wrap: wrap; gap: 20px; }
-        .bt-card { 
-            position: relative; background: #000; border: 1px solid rgba(255,255,255,0.12); 
-            transition: 0.4s; text-decoration: none; color: inherit; overflow: hidden;
+        #podcast-terminal-blacktop {
+            --bt-neon: #FFFF00;
+            --bt-white: #ffffff;
+            --bt-border: rgba(255, 255, 255, 0.12);
+            display: flow-root;
+            clear: both;
+            background: transparent !important;
+            color: var(--bt-white);
+            padding-left: 30px;
+            padding-right: 30px;
+            margin: 0;
+            font-family: 'JetBrains Mono', monospace !important;
+            width: 100%;
+            overflow: hidden;
         }
+
+        #podcast-terminal-blacktop * { box-sizing: border-box; }
+
+        .bt-magazine-header, .podcast-archive-grid {
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            padding-left: 0; 
+            padding-right: 0;
+        }
+
+        .bt-magazine-header { 
+            padding-top: 100px;
+            padding-bottom: 40px;
+            display: flex; 
+            flex-direction: column;
+        }
+        
+        .bt-brand-stack { 
+            width: 100%; 
+            margin-bottom: 40px; 
+            overflow: hidden;
+        }
+        
+        .bt-title-main, .bt-title-outline { 
+            font-family: 'Monument Extended', sans-serif !important;
+            font-size: clamp(4rem, 12vw, 11rem); 
+            font-weight: 900; 
+            line-height: 0.85; 
+            margin: 0; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            display: block;
+            white-space: nowrap;
+            max-width: 100%;
+        }
+        
+        .bt-title-main { color: var(--bt-white); }
+
+        .bt-title-outline { 
+            color: transparent; 
+            -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.3); 
+            margin-top: 5px;
+        }
+
+        .bt-full-divider { 
+            width: 100%; 
+            height: 1px; 
+            background: rgba(255, 255, 255, 0.1); 
+            margin-bottom: 30px; 
+        }
+
+        .bt-editorial-text {
+            font-size: 11px; 
+            line-height: 1.8; 
+            color: rgba(255, 255, 255, 0.5); 
+            text-transform: uppercase; 
+            text-align: right !important;
+            max-width: 520px; 
+            margin-left: auto !important;
+            letter-spacing: 2px;
+            margin: 0;
+        }
+
+        .bt-editorial-text b { 
+            color: var(--bt-neon); 
+            font-weight: 800; 
+        }
+
+        .podcast-archive-grid { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 20px; 
+            padding-bottom: 100px;
+        }
+        
+        .pc-card { 
+            position: relative; 
+            background: #000; 
+            border: 1px solid var(--bt-border); 
+            display: flex; 
+            flex-direction: column; 
+            transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+            text-decoration: none; 
+            color: inherit; 
+        }
+        
         .w-60 { flex: 1 1 calc(60% - 10px); }
         .w-40 { flex: 1 1 calc(40% - 10px); }
         .w-50 { flex: 1 1 calc(50% - 10px); }
 
-        .bt-thumb { aspect-ratio: 16/9; background-size: cover; background-position: center; transition: 0.6s; border-bottom: 1px solid rgba(255,255,255,0.12); }
-        .bt-card:hover .bt-thumb { filter: grayscale(1) brightness(0.7); transform: scale(1.03); }
-        .bt-card:hover { border-color: #FFFF00; }
-
-        .bt-content { padding: 20px; }
-        .bt-video-title { font-family: 'Monument Extended'; font-size: 18px; margin: 0 0 10px; text-transform: uppercase; }
-        .tag-box { font-size: 8px; border: 1px solid rgba(255,255,255,0.1); padding: 3px 7px; margin-right: 5px; font-weight: 800; }
-
-        /* LOADER IN BASSO AL CENTRO */
-        #loader-wrap { width: 100%; display: flex; justify-content: center; padding: 60px 0 100px; }
-        .loader { 
-            width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1); 
-            border-top: 3px solid #FFFF00; border-radius: 50%; animation: spin 1s linear infinite; 
+        .pc-thumb-container { 
+            width: 100%; 
+            aspect-ratio: 16/9; 
+            overflow: hidden; 
+            border-bottom: 1px solid var(--bt-border); 
         }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
+        
+        .pc-thumb { 
+            width: 100%; 
+            height: 100%; 
+            background-size: cover; 
+            background-position: center; 
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+        }
 
-        @media (max-width: 768px) { .w-60, .w-40, .w-50 { flex: 1 1 100%; } }
+        .pc-card:hover .pc-thumb { 
+            filter: grayscale(1) contrast(1.1) brightness(0.8); 
+            transform: scale(1.05); 
+        }
+
+        .pc-meta-strip {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 20px 0;
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.2); 
+            text-transform: uppercase;
+        }
+
+        .pc-content { 
+            padding: 15px 20px 20px; 
+            display: flex; 
+            flex-direction: column; 
+            flex-grow: 1; 
+        }
+
+        .pc-title { 
+            font-family: 'Monument Extended', sans-serif !important; 
+            font-size: 16px; 
+            font-weight: 800; 
+            margin-bottom: 12px; 
+            text-transform: uppercase; 
+        }
+
+        .pc-tag-list { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 6px; 
+        }
+
+        .tag-box { 
+            font-size: 8px; 
+            color: rgba(255, 255, 255, 0.4); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            padding: 2px 6px; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+        }
+
+        .corner-arrow { 
+            position: absolute; 
+            bottom: 20px; 
+            right: 20px; 
+            width: 15px; 
+            opacity: 0.3; 
+            transition: 0.3s; 
+        }
+
+        .corner-arrow svg { 
+            width: 100%; 
+            stroke: var(--bt-neon); 
+            stroke-width: 3; 
+            fill: none; 
+            transform: rotate(90deg); 
+        }
+        
+        .pc-card:hover { border-color: var(--bt-neon); }
+
+        .pc-card:hover .corner-arrow { 
+            opacity: 1; 
+            transform: translate(3px, 3px); 
+        }
+
+        @media (max-width: 768px) {
+            #podcast-terminal-blacktop {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+
+            .bt-magazine-header { 
+                padding-top: 50px; 
+            }
+
+            .bt-title-main, 
+            .bt-title-outline {
+                font-size: 12.5vw !important;
+                line-height: 0.9 !important;
+            }
+
+            .w-60, .w-40, .w-50 { 
+                flex: 1 1 100%; 
+            }
+
+            .bt-editorial-text { 
+                letter-spacing: 1px !important;
+            }
+        }
     </style>
-</head>
-<body>
 
-<div id="main-container">
-    <header class="bt-header">
-        <h1 class="bt-title">BLACKTOP</h1>
-        <h1 class="bt-title bt-outline">SESSIONS</h1>
-        <div class="bt-divider"></div>
+    <header class="bt-magazine-header">
+        <div class="bt-brand-stack">
+            <h1 class="bt-title-main">BLACKTOP</h1>
+            <h1 class="bt-title-outline">SESSIONS</h1>
+        </div>
+
+        <div class="bt-full-divider"></div>
+
         <p class="bt-editorial-text">
             THE UNDERGROUND <b>PHONK & WAVE</b> ARCHIVE. TRACKING THE EVOLUTION OF 
             <b>SYNTHWAVE</b> SESSIONS, <b>DRIFT PHONK</b> ENERGY AND GLOBAL <b>STREET AUDIO</b>.
         </p>
     </header>
 
-    <div id="video-grid" class="bt-grid"></div>
-
-    <div id="loader-wrap">
-        <div class="loader"></div>
-    </div>
+    <div id="dynamic-video-container" class="podcast-archive-grid"></div>
 </div>
 
-<script>
-    const API_KEY = 'AIzaSyCzyvtdHpYvKnRT3iGNXY5UwFwYba6OyPk';
-    const PLAYLIST_ID = 'PLOu--yZWWSogumQEMxLeEEtjIOT-7QAcW';
+<div id="dynamic-video-container" class="podcast-archive-grid"></div>
 
-    async function loadVideos() {
+<script>
+(function() {
+    const PLAYLIST_ID = 'PLOu--yZWWSogumQEMxLeEEtjIOT-7QAcW';
+    const container = document.getElementById('dynamic-video-container');
+    const rssUrl = `https://www.youtube.com/feeds/videos.xml?playlist_id=${PLAYLIST_ID}`;
+    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}`;
+
+    const seoVibe = [
+        { genre: 'PHONK', mood: 'NOCTURNAL', tech: 'HIGH-BASS', context: 'DRIFT' },
+        { genre: 'WAVE', mood: 'ATMOSPHERIC', tech: 'SYNTH-DRIVEN', context: 'NEON' },
+        { genre: 'DRIFT', mood: 'RAW ENERGY', tech: 'STREET AUDIO', context: 'URBAN' },
+        { genre: 'DARK', mood: 'IMMERSIVE', tech: 'LOW-FI', context: 'CYBER' }
+    ];
+
+    async function fetchVideos() {
         try {
-            const r = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=12&playlistId=${PLAYLIST_ID}&key=${API_KEY}`);
-            const d = await r.json();
-            const container = document.getElementById('video-grid');
-            
-            d.items.forEach((item, i) => {
-                const id = item.snippet.resourceId.videoId;
-                const size = (i % 3 === 0) ? 'w-60' : (i % 3 === 1) ? 'w-40' : 'w-50';
-                const card = document.createElement('a');
-                card.className = `bt-card ${size}`;
-                card.href = `https://www.youtube.com/watch?v=${id}`;
-                card.target = '_blank';
-                card.innerHTML = `
-                    <div class="bt-thumb" style="background-image:url('https://i.ytimg.com/vi/${id}/mqdefault.jpg')"></div>
-                    <div class="bt-content">
-                        <h2 class="bt-video-title">${item.snippet.title}</h2>
-                        <div><span class="tag-box">100 OTTANI</span><span class="tag-box">PHONK</span></div>
-                    </div>`;
-                container.appendChild(card);
-            });
-            document.getElementById('loader-wrap').style.display = 'none';
-        } catch(e) { console.error(e); }
+            const response = await fetch(proxyUrl);
+            const data = await response.json();
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(data.contents, "text/xml");
+            const entries = xmlDoc.getElementsByTagName("entry");
+
+            if (entries.length === 0) return;
+
+            container.innerHTML = '';
+            const fragment = document.createDocumentFragment();
+            const structuredData = []; 
+
+            for (let i = 0; i < entries.length; i++) {
+                const entry = entries[i];
+                const title = entry.getElementsByTagName("title")[0].textContent;
+                const videoId = entry.getElementsByTagName("yt:videoId")[0].textContent;
+                const pubDateRaw = entry.getElementsByTagName("published")[0].textContent;
+                const pubDate = new Date(pubDateRaw).toLocaleDateString('it-IT');
+
+                const vibe = seoVibe[i % seoVibe.length];
+                const artistName = title.includes('-') ? title.split('-')[0].trim() : "VARIOUS";
+                
+                // Generazione Descrizione SEO
+                const metaDesc = `Exclusive ${vibe.mood} session featuring ${vibe.genre} soundscapes. Technical profile: ${vibe.tech}. Powered by Blacktop Sessions.`;
+
+                // LOGICA 5 TAG: 100 Ottani + 4 parole chiave dalla descrizione/vibe
+                const tagList = [
+                    "100 OTTANI", 
+                    vibe.genre, 
+                    vibe.mood, 
+                    vibe.tech.replace('-',' '), 
+                    vibe.context
+                ];
+
+                structuredData.push({
+                    "@context": "https://schema.org",
+                    "@type": "VideoObject",
+                    "name": title,
+                    "description": metaDesc,
+                    "thumbnailUrl": [`https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`],
+                    "uploadDate": pubDateRaw,
+                    "embedUrl": `https://www.youtube.com/embed/${videoId}`
+                });
+
+                const sizeClass = (i % 3 === 0) ? 'w-60' : (i % 3 === 1) ? 'w-40' : 'w-50';
+                const thumb = `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`;
+
+                const article = document.createElement('article');
+                article.className = `pc-card ${sizeClass}`;
+                article.innerHTML = `
+                    <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" style="text-decoration:none; color:inherit; display:block;">
+                        <div class="pc-thumb-container">
+                            <div class="pc-thumb" style="background-image:url('${thumb}')"></div>
+                        </div>
+                        <div class="pc-meta-strip">
+                            <span>SERIAL: <b>${videoId}</b></span>
+                            <span>DATE: <b>${pubDate}</b></span>
+                        </div>
+                        <div class="pc-content">
+                            <h2 class="pc-title">${title}</h2>
+                            <p class="pc-desc" style="font-size:11px; color:rgba(255,255,255,0.4); margin-bottom:15px; text-transform:uppercase; letter-spacing:1px;">
+                                ${metaDesc}
+                            </p>
+                            <div class="pc-tag-list">
+                                ${tagList.map(tag => `<span class="tag-box">${tag}</span>`).join('')}
+                            </div>
+                            <div class="corner-arrow">
+                                <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </div>
+                        </div>
+                    </a>`;
+                fragment.appendChild(article);
+            }
+            container.appendChild(fragment);
+
+            const scriptSEO = document.createElement('script');
+            scriptSEO.type = 'application/ld+json';
+            scriptSEO.textContent = JSON.stringify(structuredData);
+            document.body.appendChild(scriptSEO);
+
+        } catch (error) {
+            console.warn("Sync failed.");
+        }
     }
-    loadVideos();
+
+    fetchVideos();
+})();
 </script>
-</body>
+</head>
+<body>
+    </body>
 </html>
