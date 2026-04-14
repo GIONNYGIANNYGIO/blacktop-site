@@ -9,171 +9,277 @@
 
 <div id="podcast-terminal-blacktop">
 
-<!-- LOADER -->
-<div id="loader" style="display:flex; justify-content:center; align-items:center; height:300px;">
-    <div class="spinner"></div>
-</div>
+    <!-- LOADER -->
+    <div id="loader" style="
+        width:100%;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        padding:120px 0;
+    ">
+        <div style="
+            width:40px;
+            height:40px;
+            border:3px solid rgba(255,255,255,0.1);
+            border-top:3px solid #FFFF00;
+            border-radius:50%;
+            animation:spin 1s linear infinite;
+        "></div>
+    </div>
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;800&display=swap');
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;800&display=swap');
+        
+        @font-face {
+            font-family: 'Monument Extended';
+            src: url('https://fonts.cdnfonts.com/s/19595/MonumentExtended-Ultrabold.woff');
+            font-weight: 800;
+        }
 
-@font-face {
-    font-family: 'Monument Extended';
-    src: url('https://fonts.cdnfonts.com/s/19595/MonumentExtended-Ultrabold.woff');
-    font-weight: 800;
-}
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
 
-#podcast-terminal-blacktop {
-    --bt-neon: #FFFF00;
-    --bt-white: #ffffff;
-    --bt-border: rgba(255, 255, 255, 0.12);
-    display: flow-root;
-    clear: both;
-    background: transparent !important;
-    color: var(--bt-white);
-    padding-left: 30px;
-    padding-right: 30px;
-    margin: 0;
-    font-family: 'JetBrains Mono', monospace !important;
-    width: 100%;
-    overflow: hidden;
-}
+        #podcast-terminal-blacktop {
+            --bt-neon: #FFFF00;
+            --bt-white: #ffffff;
+            --bt-border: rgba(255, 255, 255, 0.12);
+            display: flow-root;
+            clear: both;
+            background: transparent !important;
+            color: var(--bt-white);
+            padding-left: 30px;
+            padding-right: 30px;
+            margin: 0;
+            font-family: 'JetBrains Mono', monospace !important;
+            width: 100%;
+            overflow: hidden;
+        }
 
-/* LOADER */
-.spinner {
-    width: 40px;
-    height: 40px;
-    border: 3px solid rgba(255,255,255,0.2);
-    border-top: 3px solid #FFFF00;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
+        #podcast-terminal-blacktop * { box-sizing: border-box; }
 
-#podcast-terminal-blacktop * { box-sizing: border-box; }
+        .bt-magazine-header, .podcast-archive-grid {
+            width: 100%;
+            margin: 0;
+        }
 
-.bt-magazine-header, .podcast-archive-grid {
-    width: 100%;
-    margin: 0;
-}
+        .bt-magazine-header { 
+            padding-top: 100px;
+            padding-bottom: 40px;
+            display: flex; 
+            flex-direction: column;
+        }
+        
+        .bt-brand-stack { 
+            width: 100%; 
+            margin-bottom: 40px; 
+            overflow: hidden;
+        }
+        
+        .bt-title-main, .bt-title-outline { 
+            font-family: 'Monument Extended', sans-serif !important;
+            font-size: clamp(4rem, 12vw, 11rem); 
+            font-weight: 900; 
+            line-height: 0.85; 
+            margin: 0; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            display: block;
+            white-space: nowrap;
+        }
+        
+        .bt-title-main { color: var(--bt-white); }
 
-.bt-magazine-header { 
-    padding-top: 100px;
-    padding-bottom: 40px;
-}
+        .bt-title-outline { 
+            color: transparent; 
+            -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.3); 
+            margin-top: 5px;
+        }
 
-.bt-title-main, .bt-title-outline { 
-    font-family: 'Monument Extended', sans-serif !important;
-    font-size: clamp(4rem, 12vw, 11rem); 
-    font-weight: 900; 
-    line-height: 0.85;
-    text-transform: uppercase;
-}
+        .bt-full-divider { 
+            width: 100%; 
+            height: 1px; 
+            background: rgba(255, 255, 255, 0.1); 
+            margin-bottom: 30px; 
+        }
 
-.bt-title-outline { 
-    color: transparent; 
-    -webkit-text-stroke: 1.5px rgba(255,255,255,0.3);
-}
+        .bt-editorial-text {
+            font-size: 11px; 
+            line-height: 1.8; 
+            color: rgba(255, 255, 255, 0.5); 
+            text-transform: uppercase; 
+            text-align: right;
+            max-width: 520px; 
+            margin-left: auto;
+            letter-spacing: 2px;
+        }
 
-.podcast-archive-grid { 
-    display: flex; 
-    flex-wrap: wrap; 
-    gap: 20px;
-}
+        .bt-editorial-text b { 
+            color: var(--bt-neon); 
+            font-weight: 800; 
+        }
 
-.pc-card { 
-    position: relative; 
-    background: #000; 
-    border: 1px solid var(--bt-border); 
-    display: flex; 
-    flex-direction: column;
-    text-decoration: none;
-    color: white;
-}
+        .podcast-archive-grid { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 20px; 
+            padding-bottom: 100px;
+        }
+        
+        .pc-card { 
+            position: relative; 
+            background: #000; 
+            border: 1px solid var(--bt-border); 
+            display: flex; 
+            flex-direction: column; 
+            transition: 0.4s; 
+            text-decoration: none; 
+            color: inherit; 
+        }
+        
+        .w-60 { flex: 1 1 calc(60% - 10px); }
+        .w-40 { flex: 1 1 calc(40% - 10px); }
+        .w-50 { flex: 1 1 calc(50% - 10px); }
 
-.w-60 { flex: 1 1 calc(60% - 10px); }
-.w-40 { flex: 1 1 calc(40% - 10px); }
-.w-50 { flex: 1 1 calc(50% - 10px); }
+        .pc-thumb-container { 
+            width: 100%; 
+            aspect-ratio: 16/9; 
+            overflow: hidden; 
+            border-bottom: 1px solid var(--bt-border); 
+        }
+        
+        .pc-thumb { 
+            width: 100%; 
+            height: 100%; 
+            background-size: cover; 
+            background-position: center; 
+            transition: transform 0.8s, filter 0.6s;
+        }
 
-.pc-thumb-container { 
-    aspect-ratio: 16/9; 
-    overflow: hidden;
-}
+        .pc-card:hover .pc-thumb { 
+            filter: grayscale(1) brightness(0.8); 
+            transform: scale(1.05); 
+        }
 
-.pc-thumb { 
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-}
+        .pc-meta-strip {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 20px 0;
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.2); 
+            text-transform: uppercase;
+        }
 
-.pc-content { padding: 15px; }
+        .pc-content { 
+            padding: 15px 20px 20px; 
+        }
 
-@media (max-width:768px){
-    #podcast-terminal-blacktop{
-        padding-left:15px;
-        padding-right:15px;
-    }
-    .w-60,.w-40,.w-50{flex:1 1 100%;}
-}
-</style>
+        .pc-title { 
+            font-family: 'Monument Extended', sans-serif !important; 
+            font-size: 16px; 
+            font-weight: 800; 
+            margin-bottom: 12px; 
+            text-transform: uppercase; 
+        }
 
-<header class="bt-magazine-header">
-    <h1 class="bt-title-main">BLACKTOP</h1>
-    <h1 class="bt-title-outline">SESSIONS</h1>
-</header>
+        .pc-tag-list { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 6px; 
+        }
 
-<div id="dynamic-video-container" class="podcast-archive-grid"></div>
+        .tag-box { 
+            font-size: 8px; 
+            color: rgba(255, 255, 255, 0.4); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            padding: 2px 6px; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+        }
 
+        @media (max-width: 768px) {
+            #podcast-terminal-blacktop {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+
+            .bt-magazine-header { 
+                padding-top: 50px; 
+            }
+
+            .w-60, .w-40, .w-50 { 
+                flex: 1 1 100%; 
+            }
+        }
+    </style>
+
+    <header class="bt-magazine-header">
+        <div class="bt-brand-stack">
+            <h1 class="bt-title-main">BLACKTOP</h1>
+            <h1 class="bt-title-outline">SESSIONS</h1>
+        </div>
+
+        <div class="bt-full-divider"></div>
+
+        <p class="bt-editorial-text">
+            THE UNDERGROUND <b>PHONK & WAVE</b> ARCHIVE.
+        </p>
+    </header>
+
+    <div id="dynamic-video-container" class="podcast-archive-grid"></div>
 </div>
 
 <script>
-(function() {
-    const PLAYLIST_ID = 'PLOu--yZWWSogumQEMxLeEEtjIOT-7QAcW';
+(async function() {
+
+    const API_KEY = "AIzaSyCzyvtdHpYvKnRT3iGNXY5UwFwYba6OyPk";
+    const PLAYLIST_ID = "PLOu--yZWWSogumQEMxLeEEtjIOT-7QAcW";
+
     const container = document.getElementById('dynamic-video-container');
     const loader = document.getElementById('loader');
 
-    const rssUrl = `https://www.youtube.com/feeds/videos.xml?playlist_id=${PLAYLIST_ID}`;
-    const proxyUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+    try {
+        const res = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=12&playlistId=${PLAYLIST_ID}&key=${API_KEY}`);
+        const data = await res.json();
 
-    async function fetchVideos() {
-        try {
-            const response = await fetch(proxyUrl);
-            const data = await response.json();
-            const entries = data.items;
+        container.innerHTML = '';
 
-            container.innerHTML = '';
+        data.items.forEach((item, i) => {
+            const videoId = item.snippet.resourceId.videoId;
+            const title = item.snippet.title;
+            const thumb = item.snippet.thumbnails.medium.url;
+            const date = new Date(item.snippet.publishedAt).toLocaleDateString('it-IT');
 
-            for (let i = 0; i < entries.length; i++) {
-                const entry = entries[i];
-                const title = entry.title;
-                const videoId = entry.guid.split(":").pop();
+            const sizeClass = (i % 3 === 0) ? 'w-60' : (i % 3 === 1) ? 'w-40' : 'w-50';
 
-                const sizeClass = (i % 3 === 0) ? 'w-60' : (i % 3 === 1) ? 'w-40' : 'w-50';
-                const thumb = `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`;
+            const article = document.createElement('article');
+            article.className = `pc-card ${sizeClass}`;
 
-                const article = document.createElement('article');
-                article.className = `pc-card ${sizeClass}`;
-                article.innerHTML = `
-                    <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank">
-                        <div class="pc-thumb-container">
-                            <div class="pc-thumb" style="background-image:url('${thumb}')"></div>
-                        </div>
-                        <div class="pc-content">
-                            <h2>${title}</h2>
-                        </div>
-                    </a>`;
-                container.appendChild(article);
-            }
+            article.innerHTML = `
+                <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank">
+                    <div class="pc-thumb-container">
+                        <div class="pc-thumb" style="background-image:url('${thumb}')"></div>
+                    </div>
+                    <div class="pc-meta-strip">
+                        <span>${videoId}</span>
+                        <span>${date}</span>
+                    </div>
+                    <div class="pc-content">
+                        <h2 class="pc-title">${title}</h2>
+                    </div>
+                </a>
+            `;
 
-        } catch (error) {
-            container.innerHTML = "<p style='padding:40px; opacity:0.5;'>Errore caricamento video</p>";
-        }
+            container.appendChild(article);
+        });
 
         loader.style.display = "none";
+
+    } catch (e) {
+        loader.innerHTML = "ERRORE API";
     }
 
-    fetchVideos();
 })();
 </script>
 
