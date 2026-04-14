@@ -10,21 +10,8 @@
 <div id="podcast-terminal-blacktop">
 
     <!-- LOADER -->
-    <div id="loader" style="
-        width:100%;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        padding:120px 0;
-    ">
-        <div style="
-            width:40px;
-            height:40px;
-            border:3px solid rgba(255,255,255,0.1);
-            border-top:3px solid #FFFF00;
-            border-radius:50%;
-            animation:spin 1s linear infinite;
-        "></div>
+    <div id="loader" style="display:flex;justify-content:center;align-items:center;padding:120px 0;">
+        <div style="width:40px;height:40px;border:3px solid rgba(255,255,255,0.1);border-top:3px solid #FFFF00;border-radius:50%;animation:spin 1s linear infinite;"></div>
     </div>
 
     <style>
@@ -61,7 +48,10 @@
 
         .bt-magazine-header, .podcast-archive-grid {
             width: 100%;
+            max-width: none;
             margin: 0;
+            padding-left: 0; 
+            padding-right: 0;
         }
 
         .bt-magazine-header { 
@@ -87,6 +77,7 @@
             letter-spacing: 1px; 
             display: block;
             white-space: nowrap;
+            max-width: 100%;
         }
         
         .bt-title-main { color: var(--bt-white); }
@@ -109,10 +100,11 @@
             line-height: 1.8; 
             color: rgba(255, 255, 255, 0.5); 
             text-transform: uppercase; 
-            text-align: right;
+            text-align: right !important;
             max-width: 520px; 
-            margin-left: auto;
+            margin-left: auto !important;
             letter-spacing: 2px;
+            margin: 0;
         }
 
         .bt-editorial-text b { 
@@ -133,7 +125,7 @@
             border: 1px solid var(--bt-border); 
             display: flex; 
             flex-direction: column; 
-            transition: 0.4s; 
+            transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
             text-decoration: none; 
             color: inherit; 
         }
@@ -154,11 +146,11 @@
             height: 100%; 
             background-size: cover; 
             background-position: center; 
-            transition: transform 0.8s, filter 0.6s;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
         }
 
         .pc-card:hover .pc-thumb { 
-            filter: grayscale(1) brightness(0.8); 
+            filter: grayscale(1) contrast(1.1) brightness(0.8); 
             transform: scale(1.05); 
         }
 
@@ -173,6 +165,9 @@
 
         .pc-content { 
             padding: 15px 20px 20px; 
+            display: flex; 
+            flex-direction: column; 
+            flex-grow: 1; 
         }
 
         .pc-title { 
@@ -198,6 +193,30 @@
             text-transform: uppercase; 
         }
 
+        .corner-arrow { 
+            position: absolute; 
+            bottom: 20px; 
+            right: 20px; 
+            width: 15px; 
+            opacity: 0.3; 
+            transition: 0.3s; 
+        }
+
+        .corner-arrow svg { 
+            width: 100%; 
+            stroke: var(--bt-neon); 
+            stroke-width: 3; 
+            fill: none; 
+            transform: rotate(90deg); 
+        }
+        
+        .pc-card:hover { border-color: var(--bt-neon); }
+
+        .pc-card:hover .corner-arrow { 
+            opacity: 1; 
+            transform: translate(3px, 3px); 
+        }
+
         @media (max-width: 768px) {
             #podcast-terminal-blacktop {
                 padding-left: 15px;
@@ -208,8 +227,18 @@
                 padding-top: 50px; 
             }
 
+            .bt-title-main, 
+            .bt-title-outline {
+                font-size: 12.5vw !important;
+                line-height: 0.9 !important;
+            }
+
             .w-60, .w-40, .w-50 { 
                 flex: 1 1 100%; 
+            }
+
+            .bt-editorial-text { 
+                letter-spacing: 1px !important;
             }
         }
     </style>
@@ -223,7 +252,8 @@
         <div class="bt-full-divider"></div>
 
         <p class="bt-editorial-text">
-            THE UNDERGROUND <b>PHONK & WAVE</b> ARCHIVE.
+            THE UNDERGROUND <b>PHONK & WAVE</b> ARCHIVE. TRACKING THE EVOLUTION OF 
+            <b>SYNTHWAVE</b> SESSIONS, <b>DRIFT PHONK</b> ENERGY AND GLOBAL <b>STREET AUDIO</b>.
         </p>
     </header>
 
@@ -251,26 +281,33 @@
             const thumb = item.snippet.thumbnails.medium.url;
             const date = new Date(item.snippet.publishedAt).toLocaleDateString('it-IT');
 
+            const vibe = ["PHONK","WAVE","DRIFT","DARK"][i % 4];
+
             const sizeClass = (i % 3 === 0) ? 'w-60' : (i % 3 === 1) ? 'w-40' : 'w-50';
 
             const article = document.createElement('article');
             article.className = `pc-card ${sizeClass}`;
 
             article.innerHTML = `
-                <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank">
+                <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" style="text-decoration:none; color:inherit; display:block;">
                     <div class="pc-thumb-container">
                         <div class="pc-thumb" style="background-image:url('${thumb}')"></div>
                     </div>
                     <div class="pc-meta-strip">
-                        <span>${videoId}</span>
-                        <span>${date}</span>
+                        <span>SERIAL: <b>${videoId}</b></span>
+                        <span>DATE: <b>${date}</b></span>
                     </div>
                     <div class="pc-content">
                         <h2 class="pc-title">${title}</h2>
+                        <div class="pc-tag-list">
+                            <span class="tag-box">100 OTTANI</span>
+                            <span class="tag-box">${vibe}</span>
+                        </div>
+                        <div class="corner-arrow">
+                            <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                        </div>
                     </div>
-                </a>
-            `;
-
+                </a>`;
             container.appendChild(article);
         });
 
