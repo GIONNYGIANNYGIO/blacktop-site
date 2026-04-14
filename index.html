@@ -39,7 +39,7 @@
     overflow: hidden;
 }
 
-/* LOADER STYLE */
+/* LOADER */
 .spinner {
     width: 40px;
     height: 40px;
@@ -48,83 +48,37 @@
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
+@keyframes spin { to { transform: rotate(360deg); } }
 
 #podcast-terminal-blacktop * { box-sizing: border-box; }
 
 .bt-magazine-header, .podcast-archive-grid {
     width: 100%;
-    max-width: none;
     margin: 0;
-    padding-left: 0; 
-    padding-right: 0;
 }
 
 .bt-magazine-header { 
     padding-top: 100px;
     padding-bottom: 40px;
-    display: flex; 
-    flex-direction: column;
-}
-
-.bt-brand-stack { 
-    width: 100%; 
-    margin-bottom: 40px; 
-    overflow: hidden;
 }
 
 .bt-title-main, .bt-title-outline { 
     font-family: 'Monument Extended', sans-serif !important;
     font-size: clamp(4rem, 12vw, 11rem); 
     font-weight: 900; 
-    line-height: 0.85; 
-    margin: 0; 
-    text-transform: uppercase; 
-    letter-spacing: 1px; 
-    display: block;
-    white-space: nowrap;
-    max-width: 100%;
+    line-height: 0.85;
+    text-transform: uppercase;
 }
-
-.bt-title-main { color: var(--bt-white); }
 
 .bt-title-outline { 
     color: transparent; 
-    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.3); 
-    margin-top: 5px;
-}
-
-.bt-full-divider { 
-    width: 100%; 
-    height: 1px; 
-    background: rgba(255, 255, 255, 0.1); 
-    margin-bottom: 30px; 
-}
-
-.bt-editorial-text {
-    font-size: 11px; 
-    line-height: 1.8; 
-    color: rgba(255, 255, 255, 0.5); 
-    text-transform: uppercase; 
-    text-align: right !important;
-    max-width: 520px; 
-    margin-left: auto !important;
-    letter-spacing: 2px;
-    margin: 0;
-}
-
-.bt-editorial-text b { 
-    color: var(--bt-neon); 
-    font-weight: 800; 
+    -webkit-text-stroke: 1.5px rgba(255,255,255,0.3);
 }
 
 .podcast-archive-grid { 
     display: flex; 
     flex-wrap: wrap; 
-    gap: 20px; 
-    padding-bottom: 100px;
+    gap: 20px;
 }
 
 .pc-card { 
@@ -132,10 +86,9 @@
     background: #000; 
     border: 1px solid var(--bt-border); 
     display: flex; 
-    flex-direction: column; 
-    transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
-    text-decoration: none; 
-    color: inherit; 
+    flex-direction: column;
+    text-decoration: none;
+    color: white;
 }
 
 .w-60 { flex: 1 1 calc(60% - 10px); }
@@ -143,119 +96,31 @@
 .w-50 { flex: 1 1 calc(50% - 10px); }
 
 .pc-thumb-container { 
-    width: 100%; 
     aspect-ratio: 16/9; 
-    overflow: hidden; 
-    border-bottom: 1px solid var(--bt-border); 
+    overflow: hidden;
 }
 
 .pc-thumb { 
-    width: 100%; 
-    height: 100%; 
-    background-size: cover; 
-    background-position: center; 
-    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
 }
 
-.pc-card:hover .pc-thumb { 
-    filter: grayscale(1) contrast(1.1) brightness(0.8); 
-    transform: scale(1.05); 
-}
+.pc-content { padding: 15px; }
 
-.pc-meta-strip {
-    display: flex;
-    justify-content: space-between;
-    padding: 12px 20px 0;
-    font-size: 9px;
-    color: rgba(255, 255, 255, 0.2); 
-    text-transform: uppercase;
-}
-
-.pc-content { 
-    padding: 15px 20px 20px; 
-    display: flex; 
-    flex-direction: column; 
-    flex-grow: 1; 
-}
-
-.pc-title { 
-    font-family: 'Monument Extended', sans-serif !important; 
-    font-size: 16px; 
-    font-weight: 800; 
-    margin-bottom: 12px; 
-    text-transform: uppercase; 
-}
-
-.pc-tag-list { 
-    display: flex; 
-    flex-wrap: wrap; 
-    gap: 6px; 
-}
-
-.tag-box { 
-    font-size: 8px; 
-    color: rgba(255, 255, 255, 0.4); 
-    border: 1px solid rgba(255, 255, 255, 0.1); 
-    padding: 2px 6px; 
-    font-weight: 800; 
-    text-transform: uppercase; 
-}
-
-.corner-arrow { 
-    position: absolute; 
-    bottom: 20px; 
-    right: 20px; 
-    width: 15px; 
-    opacity: 0.3; 
-    transition: 0.3s; 
-}
-
-.corner-arrow svg { 
-    width: 100%; 
-    stroke: var(--bt-neon); 
-    stroke-width: 3; 
-    fill: none; 
-    transform: rotate(90deg); 
-}
-
-.pc-card:hover { border-color: var(--bt-neon); }
-
-.pc-card:hover .corner-arrow { 
-    opacity: 1; 
-    transform: translate(3px, 3px); 
-}
-
-@media (max-width: 768px) {
-    #podcast-terminal-blacktop {
-        padding-left: 15px;
-        padding-right: 15px;
+@media (max-width:768px){
+    #podcast-terminal-blacktop{
+        padding-left:15px;
+        padding-right:15px;
     }
-
-    .bt-magazine-header { padding-top: 50px; }
-
-    .bt-title-main, 
-    .bt-title-outline {
-        font-size: 12.5vw !important;
-        line-height: 0.9 !important;
-    }
-
-    .w-60, .w-40, .w-50 { flex: 1 1 100%; }
-
-    .bt-editorial-text { letter-spacing: 1px !important; }
+    .w-60,.w-40,.w-50{flex:1 1 100%;}
 }
 </style>
 
 <header class="bt-magazine-header">
-    <div class="bt-brand-stack">
-        <h1 class="bt-title-main">BLACKTOP</h1>
-        <h1 class="bt-title-outline">SESSIONS</h1>
-    </div>
-
-    <div class="bt-full-divider"></div>
-
-    <p class="bt-editorial-text">
-        THE UNDERGROUND <b>PHONK & WAVE</b> ARCHIVE...
-    </p>
+    <h1 class="bt-title-main">BLACKTOP</h1>
+    <h1 class="bt-title-outline">SESSIONS</h1>
 </header>
 
 <div id="dynamic-video-container" class="podcast-archive-grid"></div>
@@ -269,23 +134,20 @@
     const loader = document.getElementById('loader');
 
     const rssUrl = `https://www.youtube.com/feeds/videos.xml?playlist_id=${PLAYLIST_ID}`;
-    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}`;
+    const proxyUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
 
     async function fetchVideos() {
         try {
             const response = await fetch(proxyUrl);
             const data = await response.json();
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(data.contents, "text/xml");
-            const entries = xmlDoc.getElementsByTagName("entry");
+            const entries = data.items;
 
             container.innerHTML = '';
-            const fragment = document.createDocumentFragment();
 
             for (let i = 0; i < entries.length; i++) {
                 const entry = entries[i];
-                const title = entry.getElementsByTagName("title")[0].textContent;
-                const videoId = entry.getElementsByTagName("yt:videoId")[0].textContent;
+                const title = entry.title;
+                const videoId = entry.guid.split(":").pop();
 
                 const sizeClass = (i % 3 === 0) ? 'w-60' : (i % 3 === 1) ? 'w-40' : 'w-50';
                 const thumb = `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`;
@@ -298,16 +160,14 @@
                             <div class="pc-thumb" style="background-image:url('${thumb}')"></div>
                         </div>
                         <div class="pc-content">
-                            <h2 class="pc-title">${title}</h2>
+                            <h2>${title}</h2>
                         </div>
                     </a>`;
-                fragment.appendChild(article);
+                container.appendChild(article);
             }
 
-            container.appendChild(fragment);
-
         } catch (error) {
-            console.warn("Sync failed.");
+            container.innerHTML = "<p style='padding:40px; opacity:0.5;'>Errore caricamento video</p>";
         }
 
         loader.style.display = "none";
