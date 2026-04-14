@@ -1,19 +1,45 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Blacktop</title>
-</head>
+<!-- WRAPPER + LOADER -->
+<div id="outer-wrap" style="width:100%; display:flex; justify-content:center;">
 
-<body style="margin:0; background:transparent;">
+<div id="loader" style="
+display:flex;
+justify-content:center;
+align-items:center;
+padding:120px 0;
+width:100%;
+">
+    <div style="
+    width:40px;
+    height:40px;
+    border:3px solid rgba(255,255,255,0.1);
+    border-top:3px solid #FFFF00;
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+    "></div>
+</div>
 
+<style>
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 🔥 FIX MARGINI REALI */
+#podcast-terminal-blacktop {
+    max-width:1400px !important;
+    margin:0 auto !important;
+    padding-left:30px !important;
+    padding-right:30px !important;
+}
+
+@media (max-width:768px){
+    #podcast-terminal-blacktop{
+        padding-left:15px !important;
+        padding-right:15px !important;
+    }
+}
+</style>
 <div id="podcast-terminal-blacktop">
-
-    <!-- LOADER -->
-    <div id="loader" style="display:flex;justify-content:center;align-items:center;padding:120px 0;">
-        <div style="width:40px;height:40px;border:3px solid rgba(255,255,255,0.1);border-top:3px solid #FFFF00;border-radius:50%;animation:spin 1s linear infinite;"></div>
-    </div>
-
     <style>
         @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;800&display=swap');
         
@@ -21,11 +47,6 @@
             font-family: 'Monument Extended';
             src: url('https://fonts.cdnfonts.com/s/19595/MonumentExtended-Ultrabold.woff');
             font-weight: 800;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
         }
 
         #podcast-terminal-blacktop {
@@ -261,64 +282,120 @@
 </div>
 
 <script>
-(async function() {
-
-    const API_KEY = "AIzaSyCzyvtdHpYvKnRT3iGNXY5UwFwYba6OyPk";
-    const PLAYLIST_ID = "PLOu--yZWWSogumQEMxLeEEtjIOT-7QAcW";
-
+(function() {
+    const PLAYLIST_ID = 'PLOu--yZWWSogumQEMxLeEEtjIOT-7QAcW';
     const container = document.getElementById('dynamic-video-container');
-    const loader = document.getElementById('loader');
+    const rssUrl = `https://www.youtube.com/feeds/videos.xml?playlist_id=${PLAYLIST_ID}`;
+    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}`;
 
-    try {
-        const res = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=12&playlistId=${PLAYLIST_ID}&key=${API_KEY}`);
-        const data = await res.json();
+    const seoVibe = [
+        { genre: 'PHONK', mood: 'NOCTURNAL', tech: 'HIGH-BASS', context: 'DRIFT' },
+        { genre: 'WAVE', mood: 'ATMOSPHERIC', tech: 'SYNTH-DRIVEN', context: 'NEON' },
+        { genre: 'DRIFT', mood: 'RAW ENERGY', tech: 'STREET AUDIO', context: 'URBAN' },
+        { genre: 'DARK', mood: 'IMMERSIVE', tech: 'LOW-FI', context: 'CYBER' }
+    ];
 
-        container.innerHTML = '';
+    async function fetchVideos() {
+        try {
+            const response = await fetch(proxyUrl);
+            const data = await response.json();
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(data.contents, "text/xml");
+            const entries = xmlDoc.getElementsByTagName("entry");
 
-        data.items.forEach((item, i) => {
-            const videoId = item.snippet.resourceId.videoId;
-            const title = item.snippet.title;
-            const thumb = item.snippet.thumbnails.medium.url;
-            const date = new Date(item.snippet.publishedAt).toLocaleDateString('it-IT');
+            if (entries.length === 0) return;
 
-            const vibe = ["PHONK","WAVE","DRIFT","DARK"][i % 4];
+            container.innerHTML = '';
+            const fragment = document.createDocumentFragment();
+            const structuredData = []; 
 
-            const sizeClass = (i % 3 === 0) ? 'w-60' : (i % 3 === 1) ? 'w-40' : 'w-50';
+            for (let i = 0; i < entries.length; i++) {
+                const entry = entries[i];
+                const title = entry.getElementsByTagName("title")[0].textContent;
+                const videoId = entry.getElementsByTagName("yt:videoId")[0].textContent;
+                const pubDateRaw = entry.getElementsByTagName("published")[0].textContent;
+                const pubDate = new Date(pubDateRaw).toLocaleDateString('it-IT');
 
-            const article = document.createElement('article');
-            article.className = `pc-card ${sizeClass}`;
+                const vibe = seoVibe[i % seoVibe.length];
+                const artistName = title.includes('-') ? title.split('-')[0].trim() : "VARIOUS";
+                
+                // Generazione Descrizione SEO
+                const metaDesc = `Exclusive ${vibe.mood} session featuring ${vibe.genre} soundscapes. Technical profile: ${vibe.tech}. Powered by Blacktop Sessions.`;
 
-            article.innerHTML = `
-                <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" style="text-decoration:none; color:inherit; display:block;">
-                    <div class="pc-thumb-container">
-                        <div class="pc-thumb" style="background-image:url('${thumb}')"></div>
-                    </div>
-                    <div class="pc-meta-strip">
-                        <span>SERIAL: <b>${videoId}</b></span>
-                        <span>DATE: <b>${date}</b></span>
-                    </div>
-                    <div class="pc-content">
-                        <h2 class="pc-title">${title}</h2>
-                        <div class="pc-tag-list">
-                            <span class="tag-box">100 OTTANI</span>
-                            <span class="tag-box">${vibe}</span>
+                // LOGICA 5 TAG: 100 Ottani + 4 parole chiave dalla descrizione/vibe
+                const tagList = [
+                    "100 OTTANI", 
+                    vibe.genre, 
+                    vibe.mood, 
+                    vibe.tech.replace('-',' '), 
+                    vibe.context
+                ];
+
+                structuredData.push({
+                    "@context": "https://schema.org",
+                    "@type": "VideoObject",
+                    "name": title,
+                    "description": metaDesc,
+                    "thumbnailUrl": [`https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`],
+                    "uploadDate": pubDateRaw,
+                    "embedUrl": `https://www.youtube.com/embed/${videoId}`
+                });
+
+                const sizeClass = (i % 3 === 0) ? 'w-60' : (i % 3 === 1) ? 'w-40' : 'w-50';
+                const thumb = `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`;
+
+                const article = document.createElement('article');
+                article.className = `pc-card ${sizeClass}`;
+                article.innerHTML = `
+                    <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" style="text-decoration:none; color:inherit; display:block;">
+                        <div class="pc-thumb-container">
+                            <div class="pc-thumb" style="background-image:url('${thumb}')"></div>
                         </div>
-                        <div class="corner-arrow">
-                            <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                        <div class="pc-meta-strip">
+                            <span>SERIAL: <b>${videoId}</b></span>
+                            <span>DATE: <b>${pubDate}</b></span>
                         </div>
-                    </div>
-                </a>`;
-            container.appendChild(article);
-        });
+                        <div class="pc-content">
+                            <h2 class="pc-title">${title}</h2>
+                            <p class="pc-desc" style="font-size:11px; color:rgba(255,255,255,0.4); margin-bottom:15px; text-transform:uppercase; letter-spacing:1px;">
+                                ${metaDesc}
+                            </p>
+                            <div class="pc-tag-list">
+                                ${tagList.map(tag => `<span class="tag-box">${tag}</span>`).join('')}
+                            </div>
+                            <div class="corner-arrow">
+                                <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </div>
+                        </div>
+                    </a>`;
+                fragment.appendChild(article);
+            }
+            container.appendChild(fragment);
 
-        loader.style.display = "none";
+            const scriptSEO = document.createElement('script');
+            scriptSEO.type = 'application/ld+json';
+            scriptSEO.textContent = JSON.stringify(structuredData);
+            document.body.appendChild(scriptSEO);
 
-    } catch (e) {
-        loader.innerHTML = "ERRORE API";
+        } catch (error) {
+            console.warn("Sync failed.");
+        }
     }
 
+    fetchVideos();
 })();
 </script>
+</div> <!-- chiude outer-wrap -->
 
-</body>
-</html>
+<script>
+/* 🔥 NASCONDE LOADER QUANDO I VIDEO ARRIVANO */
+const observer = new MutationObserver(() => {
+    const container = document.getElementById('dynamic-video-container');
+    if (container && container.children.length > 0) {
+        const loader = document.getElementById('loader');
+        if (loader) loader.style.display = 'none';
+    }
+});
+
+observer.observe(document.getElementById('dynamic-video-container'), { childList: true });
+</script>
