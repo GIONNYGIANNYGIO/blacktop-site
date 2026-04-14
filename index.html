@@ -1,3 +1,9 @@
+<style>
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+</style>
 <!-- WRAPPER + LOADER -->
 <div id="outer-wrap" style="width:100%; display:flex; justify-content:center;">
 
@@ -135,9 +141,9 @@ body {
     color: inherit;
 }
 
-.w-60 { flex: 1 1 calc(60% - 10px); }
-.w-40 { flex: 1 1 calc(40% - 10px); }
-.w-50 { flex: 1 1 calc(50% - 10px); }
+.w-60 { flex: 1 1 calc(60% - 20px); }
+.w-40 { flex: 1 1 calc(40% - 20px); }
+.w-50 { flex: 1 1 calc(50% - 20px); }
 
 .pc-thumb-container {
     aspect-ratio:16/9;
@@ -156,6 +162,14 @@ body {
 .pc-card:hover .pc-thumb {
     filter: grayscale(1) contrast(1.1) brightness(0.8);
     transform: scale(1.05);
+}
+    
+.pc-card {
+    max-width: 100%;
+}
+   
+.podcast-archive-grid {
+    overflow-x: hidden;
 }
 
 .pc-meta-strip {
